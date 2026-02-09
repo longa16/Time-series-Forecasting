@@ -4,16 +4,16 @@
 Inventory management is a major challenge for retailers. Understocking leads to lost sales, while overstocking increases capital expenditures.
 This project aims to build a **time series** model capable of predicting future sales based on five years of historical data, in order to optimize logistics and human resource planning.
 
-## Stack Technique
+## Stack
 * **Language :** Python 3.x
-* **Librairies :** Pandas, Matplotlib, Scikit-learn.
+* **Libraries :** Pandas, Matplotlib, Scikit-learn.
 * **Modelisation :** Prophet (Facebook Core Data Science).
-* **Métriques :** MAE (Mean Absolute Error), MAPE (Mean Absolute Percentage Error).
+* **Metrics :** MAE (Mean Absolute Error), MAPE (Mean Absolute Percentage Error).
 
-## Méthodologie
+## Methodology
 
-### 1. Analyse Exploratoire & Décomposition
-* Analysis of the stationarity and components of the time series.
+### 1. Exploratory Analysis and Decomposition
+* Analysis of the stationary and components of the time series.
 * Additive decomposition to isolate :
     * **Trend :** Linear growth observed over 5 years.
     * **Seasonality :** strong weekly and annual patterns.
@@ -39,5 +39,3 @@ The model manages to track trends and seasonal peaks with sufficient accuracy fo
 * **MAPE (Percentage Error):** ~12% 
 * The model accurately captures the dynamics of year-end peaks.
 
-## Conclusion
-Ce projet démontre qu'il est possible d'automatiser la prévision des ventes avec des outils modernes comme Prophet, permettant de passer d'une gestion réactive à une gestion proactive des stocks.
