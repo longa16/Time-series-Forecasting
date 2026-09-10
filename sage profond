@@ -1,0 +1,138 @@
+[1mdiff --git a/readme.md b/readme.md[m
+[1mindex 96755f9..1ca99e0 100644[m
+[1m--- a/readme.md[m
+[1m+++ b/readme.md[m
+[36m@@ -1,41 +1,93 @@[m
+[31m-#  Time Series Forecasting [m
+[31m-[m
+[31m-## Business context[m
+[31m-Inventory management is a major challenge for retailers. Understocking leads to lost sales, while overstocking increases capital expenditures.[m
+[31m-This project aims to build a **time series** model capable of predicting future sales based on five years of historical data, in order to optimize logistics and human resource planning.[m
+[31m-[m
+[31m-## Stack[m
+[31m-* **Language :** Python 3.x[m
+[31m-* **Libraries :** Pandas, Matplotlib, Scikit-learn.[m
+[31m-* **Modelisation :** Prophet (Facebook Core Data Science).[m
+[31m-* **Metrics :** MAE (Mean Absolute Error), MAPE (Mean Absolute Percentage Error).[m
+[31m-[m
+[31m-## Methodology[m
+[31m-[m
+[31m-### 1. Exploratory Analysis and Decomposition[m
+[31m-* Analysis of the stationary and components of the time series.[m
+[31m-* Additive decomposition to isolate :[m
+[31m-    * **Trend :** Linear growth observed over 5 years.[m
+[31m-    * **Seasonality :** strong weekly and annual patterns.[m
+[31m-[m
+[31m-### 2. Modelisation with Prophet[m
+[31m-The Prophet algorithm is used for its robustness in the face of missing data and its ability to handle multiple seasonalities without complex engineering.[m
+[31m-* **Configuration:** Enable annual seasonality (`yearly_seasonality=True`).[m
+[31m-* **Split:** Training over 4 years and 9 months, Testing over the last 3 months.[m
+[31m-* [m
+[31m-##  Insights & Recommandations[m
+[31m-[m
+[31m-Analysis of the model's components revealed clear consumption patterns:[m
+[31m-[m
+[31m-| Component | Observation | Actionable Recommendation |[m
+[31m-| :--- | :--- | :--- |[m
+[31m-| **Weekly** | Major peak on Sunday and Saturday. Low on Monday. | **Staffing:** Increase staffing levels on weekends. Schedule inventory and restocking on Mondays. |[m
+[31m-| **Annual** | Peaks in **July/August** (Summer) and **December** (Holidays). | **Logistics:** Secure supplies 2 months before these peaks to avoid stockouts. |[m
+[31m-| **Trend** | Steady growth. | **Strategy:** Plan an increase in the overall purchasing budget for year N+1. |[m
+[31m-[m
+[31m-##  Performance[m
+[31m-The model manages to track trends and seasonal peaks with sufficient accuracy for operational planning.[m
+[31m-[m
+[31m-* **MAPE (Percentage Error):** ~12% [m
+[31m-* The model accurately captures the dynamics of year-end peaks.[m
+[32m+[m[32m# Time Series Forecasting[m
+[32m+[m
+[32m+[m[32m## Objectif du projet[m
+[32m+[m[32mCe projet vise à prévoir les ventes futures à partir d’un historique de données de vente journalières. L’objectif est de comprendre les tendances et la saisonnalité du comportement commercial afin d’aider à la planification logistique, les prévisions de stock et l’optimisation des ressources.[m
+[32m+[m
+[32m+[m[32mLe dataset utilisé est le fichier `train.csv`, qui contient des ventes journalieres pour plusieurs magasins et produits, avec les colonnes suivantes :[m
+[32m+[m
+[32m+[m[32m- `date`[m
+[32m+[m[32m- `store`[m
+[32m+[m[32m- `item`[m
+[32m+[m[32m- `sales`[m
+[32m+[m
+[32m+[m[32m## Données et contexte[m
+[32m+[m[32mLe projet exploite une série temporelle quotidienne sur plusieurs années. Les étapes principales de l’analyse sont :[m
+[32m+[m
+[32m+[m[32m1. Chargement du dataset et conversion de la colonne `date` en type datetime.[m
+[32m+[m[32m2. Agrégation des ventes par jour pour obtenir la série globale de ventes totales.[m
+[32m+[m[32m3. Analyse visuelle de la tendance et des variations saisonnières.[m
+[32m+[m[32m4. Modélisation avec Prophet pour prévoir les 90 prochains jours.[m
+[32m+[m[32m5. Evaluation des performances du modèle via MAE et MAPE.[m
+[32m+[m
+[32m+[m[32m## Stack technique[m
+[32m+[m[32m- Python 3.13[m
+[32m+[m[32m- Pandas[m
+[32m+[m[32m- Matplotlib[m
+[32m+[m[32m- Seaborn[m
+[32m+[m[32m- Scikit-learn[m
+[32m+[m[32m- Prophet[m
+[32m+[m
+[32m+[m[32m## Workflow du projet[m
+[32m+[m
+[32m+[m[32m### 1. Analyse exploratoire[m
+[32m+[m[32mUne première étape consiste à inspecter les données, vérifier leur structure et visualiser les ventes quotidiennes. La série agrégée par date permet d’observer la dynamique globale sur le temps.[m
+[32m+[m
+[32m+[m[32m### 2. Préparation pour la modélisation[m
+[32m+[m[32mLe modèle est construit sur un dataframe Prophet adapté :[m
+[32m+[m
+[32m+[m[32m- `ds` : date[m
+[32m+[m[32m- `y` : total des ventes par jour[m
+[32m+[m
+[32m+[m[32mLa séparation des données est faite de la manière suivante :[m
+[32m+[m
+[32m+[m[32m- Entraînement : toutes les observations avant la dernière période de 90 jours[m
+[32m+[m[32m- Test : 90 derniers jours, utilisés pour évaluer la qualité de la prévision[m
+[32m+[m
+[32m+[m[32m### 3. Modélisation avec Prophet[m
+[32m+[m[32mLe modèle est configuré avec une saisonnalité annuelle activée et sans saisonnalité quotidienne.[m
+[32m+[m
+[32m+[m[32m```python[m
+[32m+[m[32mmodel = Prophet(yearly_seasonality=True, daily_seasonality=False)[m
+[32m+[m[32mmodel.fit(train)[m
+[32m+[m
+[32m+[m[32mfuture = model.make_future_dataframe(periods=90)[m
+[32m+[m[32mforecast = model.predict(future)[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m### 4. Évaluation des performances[m
+[32m+[m[32mLe projet compare les prédictions du modèle aux vraies ventes sur la fenêtre de test à l’aide de :[m
+[32m+[m
+[32m+[m[32m- MAE (Mean Absolute Error)[m
+[32m+[m[32m- MAPE (Mean Absolute Percentage Error)[m
+[32m+[m
+[32m+[m[32m## Résultats observés[m
+[32m+[m[32mLes analyses et les prévisions montrent que la série présente :[m
+[32m+[m
+[32m+[m[32m- une tendance générale positive,[m
+[32m+[m[32m- des variations saisonnières marquées,[m
+[32m+[m[32m- des pics sur certaines périodes de l’année,[m
+[32m+[m[32m- une bonne capacité du modèle à suivre les mouvements principaux de la demande.[m
+[32m+[m
+[32m+[m[32mLe notebook du projet affiche notamment :[m
+[32m+[m
+[32m+[m[32m- les ventes totales quotidiennes,[m
+[32m+[m[32m- la comparaison entre réalité et prédiction sur les 3 derniers mois,[m
+[32m+[m[32m- les composantes de tendance et de saisonnalité du modèle.[m
+[32m+[m
+[32m+[m[32m## Structure du dépôt[m
+[32m+[m[32m- `train.csv` : données historiques de ventes[m
+[32m+[m[32m- `Untitled.ipynb` : notebook d’exploration, modélisation et évaluation[m
+[32m+[m[32m- `main.py` : point d’entrée minimal du projet[m
+[32m+[m[32m- `pyproject.toml` : configuration Python et dépendances du projet[m
+[32m+[m
+[32m+[m[32m## Installation[m
+[32m+[m[32m```bash[m
+[32m+[m[32mpip install -e .[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m## Utilisation[m
+[32m+[m[32mLe projet est surtout exploité via le notebook Jupyter dans `Untitled.ipynb`. Il contient toutes les étapes de nettoyage, visualisation, modélisation et validation.[m
+[32m+[m
+[32m+[m[32m## Conclusion[m
+[32m+[m[32mLe projet illustre une démarche classique de forecasting de séries temporelles appliquée au retail, avec un modèle Prophet robuste pour capturer les tendances et les effets saisonniers sans nécessiter une préparation trop complexe des variables.[m
+ [m

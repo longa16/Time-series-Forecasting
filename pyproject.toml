@@ -1,0 +1,15 @@
+[project]
+name = "time-series-forecasting"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.3.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.1",
+    "pandas>=3.0.5",
+    "prophet>=1.4.0",
+    "scikit-learn>=1.9.0",
+    "seaborn>=0.13.2",
+]
